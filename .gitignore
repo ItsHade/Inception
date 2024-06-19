@@ -1,3 +1,4 @@
 .env
+srcs/.env
 test/
 .vscode/
