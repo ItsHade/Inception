@@ -1,15 +1,26 @@
-version: "3"
+version: '3'
 
 services:
   nginx:
-    build: requirements/nginx/
-    env_file: .env # maybe not needed for every service
+    container_name: nginx
+    build: ./requirements/nginx/
+    env_file: .env # maybe not needed for every service
     container_name: nginx
     ports:
-      - "80:80"
+      - 80:80 # to remove
+      - 443:443
+    volumes:
+      - wordpress_data:/var/www/html
+    network:
+      - inception
     restart: always
-  mariadb:
-    build: requirements/mariadb/
-    env_file: .env
-    container_name: mariadb
-    restart: always
+  # mariadb:
+  #   build: requirements/mariadb/
+  #   env_file: .env
+  #   container_name: mariadb
+  #   restart: always
+
+
+networks:
+  inception:
+    driver: bridge
