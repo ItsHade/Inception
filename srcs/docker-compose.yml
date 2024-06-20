@@ -8,17 +8,34 @@ services:
     env_file: .env # maybe not needed for every service
     ports:
       - 443:443
-    # volumes:
-    #   - wordpress_data:/var/www/html
+    volumes:
+      - wordpress_data:/var/www/html
     networks:
       - inception
     restart: always
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress/
+    env_file: .env
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - inception
+    restart: always
+
   # mariadb:
   #   build: requirements/mariadb/
   #   env_file: .env
   #   container_name: mariadb
   #   restart: always
 
+volumes:
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/maburnet/data/wordpress
+      o: bind
 
 networks:
   inception:
